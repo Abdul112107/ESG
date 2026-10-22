@@ -6,6 +6,18 @@ import { seedDatabase } from '../seed/seedData';
 
 const router = Router();
 
+// GET /api or /
+router.get('/', (_req: Request, res: Response) => {
+  const db = getDatabaseStatus();
+  return res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    service: 'EcoTrack ESG Platform API',
+    version: '1.0.0',
+    database: db
+  });
+});
+
 // GET /api/health
 router.get('/health', (_req: Request, res: Response) => {
   const db = getDatabaseStatus();

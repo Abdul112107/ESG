@@ -4,11 +4,20 @@ import path from 'path';
 import { dal } from '../db/dal';
 import { calculationService } from './calculationService';
 
-const REPORTS_DIR = path.resolve(process.cwd(), '.data', 'reports');
+const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+const REPORTS_DIR = path.resolve(
+  isServerless ? '/tmp' : process.cwd(),
+  '.data',
+  'reports'
+);
 
 function ensureReportsDir() {
-  if (!fs.existsSync(REPORTS_DIR)) {
-    fs.mkdirSync(REPORTS_DIR, { recursive: true });
+  try {
+    if (!fs.existsSync(REPORTS_DIR)) {
+      fs.mkdirSync(REPORTS_DIR, { recursive: true });
+    }
+  } catch (err) {
+    console.warn('[PDF] Could not create reports directory:', err);
   }
 }
 
