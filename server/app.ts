@@ -23,17 +23,36 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// REST API Routes
+// REST API Routes (mounted with and without /api prefix for seamless local and Vercel serverless execution)
 app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes);
+
 app.use('/api/organizations', organizationRoutes);
+app.use('/organizations', organizationRoutes);
+
 app.use('/api/energy', energyRoutes);
+app.use('/energy', energyRoutes);
+
 app.use('/api/emissions', emissionRoutes);
+app.use('/emissions', emissionRoutes);
+
 app.use('/api/waste', wasteRoutes);
+app.use('/waste', wasteRoutes);
+
 app.use('/api/esg', esgRoutes);
+app.use('/esg', esgRoutes);
+
 app.use('/api/goals', goalRoutes);
+app.use('/goals', goalRoutes);
+
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/dashboard', dashboardRoutes);
+
 app.use('/api/reports', reportRoutes);
+app.use('/reports', reportRoutes);
+
 app.use('/api', systemRoutes);
+app.use('/', systemRoutes);
 
 // Centralized error handler
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {

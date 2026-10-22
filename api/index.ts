@@ -9,12 +9,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       await initializeBackend();
       isReady = true;
     }
-
-    // Ensure the request path has /api prefix for Express router alignment
-    if (!req.url.startsWith('/api')) {
-      req.url = '/api' + (req.url.startsWith('/') ? req.url : '/' + req.url);
-    }
-
     return app(req as any, res as any);
   } catch (err: any) {
     console.error('[Vercel Serverless Error]', err);
