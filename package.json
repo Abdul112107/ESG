@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
     "build:client": "vite build",
-    "build:server": "esbuild server/app.ts --bundle --platform=node --target=node20 --format=esm --outfile=api/server-bundle.js --external:pdfkit --external:mongoose --external:bcryptjs",
+    "build:server": "esbuild server/app.ts --bundle --platform=node --target=node20 --format=esm --packages=external \"--banner:js=import { createRequire } from 'module'; const require = createRequire(import.meta.url);\" --outfile=api/server-bundle.js",
     "build": "vite build && npm run build:server",
     "preview": "vite preview",
     "start": "tsx server.ts",
