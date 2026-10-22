@@ -1,4 +1,3 @@
-import PDFDocument from 'pdfkit';
 import fs from 'fs';
 import path from 'path';
 import { dal } from '../db/dal';
@@ -90,7 +89,8 @@ export const pdfService = {
     const fileName = `${safeType}_${params.reportingPeriod}_${timestamp}.pdf`;
     const filePath = path.resolve(REPORTS_DIR, fileName);
 
-    // Create PDF document using PDFKit
+    // Create PDF document using PDFKit dynamically
+    const { default: PDFDocument } = await import('pdfkit');
     await new Promise<void>((resolve, reject) => {
       const doc = new PDFDocument({ margin: 40, size: 'A4' });
       const stream = fs.createWriteStream(filePath);

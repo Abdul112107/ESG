@@ -48836,7 +48836,6 @@ var import_express9 = __toESM(require_express2(), 1);
 import fs3 from "fs";
 
 // server/services/pdfService.ts
-import PDFDocument from "pdfkit";
 import fs2 from "fs";
 import path2 from "path";
 var isServerless2 = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
@@ -48901,6 +48900,7 @@ var pdfService = {
     const safeType = params.reportType.toLowerCase().replace(/[^a-z0-9]/g, "_");
     const fileName = `${safeType}_${params.reportingPeriod}_${timestamp}.pdf`;
     const filePath = path2.resolve(REPORTS_DIR, fileName);
+    const { default: PDFDocument } = await import("pdfkit");
     await new Promise((resolve, reject) => {
       const doc = new PDFDocument({ margin: 40, size: "A4" });
       const stream = fs2.createWriteStream(filePath);
